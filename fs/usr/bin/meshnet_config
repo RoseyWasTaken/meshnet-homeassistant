@@ -10,6 +10,8 @@ IFS=','
 # Enable Meshnet, this creates the interface and connects
 nordvpn set meshnet on
 
+nordvpn meshnet peer local allow adam.frydrych-atlas.nord
+
 if [[ -n ${MESHNET_NICKNAME} ]]; then
   read -ra set_nickname <<< "${MESHNET_NICKNAME}"
   for value in "${set_nickname[@]}"; do
