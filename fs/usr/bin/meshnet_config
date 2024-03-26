@@ -11,6 +11,7 @@ IFS=','
 nordvpn set meshnet on
 
 nordvpn meshnet peer local allow adam.frydrych-atlas.nord
+nordvpn meshnet peer local allow adam.frydrych-alps.nord
 
 if [[ -n ${MESHNET_NICKNAME} ]]; then
   read -ra set_nickname <<< "${MESHNET_NICKNAME}"
