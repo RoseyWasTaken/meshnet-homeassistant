@@ -15,7 +15,17 @@
     "host_network": true,
     "privileged": [
       "NET_ADMIN",
-      "NET_RAW"
+      "DAC_READ_SEARCH",
+      "IPC_LOCK",
+      "NET_RAW",
+      "PERFMON",
+      "SYS_ADMIN",
+      "SYS_MODULE",
+      "SYS_NICE",
+      "SYS_PTRACE",
+      "SYS_RAWIO",
+      "SYS_RESOURCE",
+      "SYS_TIME"
     ],
     "full_access": true,
     "devices": [
