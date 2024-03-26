@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy
+FROM ghcr.io/linuxserver/baseimage-ubuntu:focal
 LABEL maintainer="Matts Bos - MattsTechInfo"
 
 # Configure the NordVPN client version to install at build
@@ -28,8 +28,9 @@ RUN echo "**** Get NordVPN Repo ****" && \
 # Copy all the files we need in the container
 COPY /fs /
 
-# Set nft iptables
-
+# Set legacy iptables
+run update-alternatives --set iptables /usr/sbin/iptables-legacy
+run update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 # Make sure NordVPN service is running before logging in and launching Meshnet
 ENV S6_CMD_WAIT_FOR_SERVICES=1
