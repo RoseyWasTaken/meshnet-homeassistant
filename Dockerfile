@@ -7,8 +7,8 @@ ARG NORDVPN_CLIENT_VERSION=3.17.0
 # Avoid interactions during build process
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt update
-RUN apt install -y wget iptables iproute2 procps iputils-ping
+RUN apt-get update
+RUN apt-get install -y wget iptables iproute2 procps iputils-ping
 
 # Use legacy iptables not nftables, see https://wiki.debian.org/iptables
 RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
