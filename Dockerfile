@@ -7,10 +7,6 @@ ARG NORDVPN_CLIENT_VERSION=3.17.0
 # Avoid interactions during build process
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt update
-RUN update-alternatives --set iptables /usr/sbin/iptables-nft
-RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-nft
-
 # Install dependencies, get the NordVPN Repo, install NordVPN client, cleanup and set executables
 RUN echo "**** Get NordVPN Repo ****" && \
     curl https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb --output /tmp/nordvpnrepo.deb && \
