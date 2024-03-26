@@ -6,6 +6,8 @@ ARG NORDVPN_CLIENT_VERSION=3.17.0
 
 # Avoid interactions during build process
 ARG DEBIAN_FRONTEND=noninteractive
+RUN update-alternatives --set iptables /usr/sbin/iptables-nft
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-nft
 
 # Install dependencies, get the NordVPN Repo, install NordVPN client, cleanup and set executables
 RUN echo "**** Get NordVPN Repo ****" && \
@@ -27,6 +29,9 @@ RUN echo "**** Get NordVPN Repo ****" && \
 
 # Copy all the files we need in the container
 COPY /fs /
+
+# Set nft iptables
+
 
 # Make sure NordVPN service is running before logging in and launching Meshnet
 ENV S6_CMD_WAIT_FOR_SERVICES=1
