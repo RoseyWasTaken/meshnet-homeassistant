@@ -1,0 +1,80 @@
+#!/usr/bin/with-contenv bash
+
+# fetch envs from HA and set accordingly
+CONFIG_PATH=/data/options.json
+MESHNET_NICKNAME=$(jq --raw-output '.meshnet_nickname // empty' $CONFIG_PATH)
+
+# Set delimiter to comma
+IFS=','
+
+# Enable Meshnet, this creates the interface and connects
+nordvpn set meshnet on
+
+if [[ -n ${MESHNET_NICKNAME} ]]; then
+  read -ra set_nickname <<< "${MESHNET_NICKNAME}"
+  for value in "${set_nickname[@]}"; do
+    nordvpn meshnet set nickname "$value"
+  done
+fi
+
+# Iterate through Meshnet peer permissions
+if [[ -n ${NORDVPN_DENY_PEER_ROUTING} ]]; then
+  read -ra deny_routing <<< "${NORDVPN_DENY_PEER_ROUTING}"
+  for value in "${deny_routing[@]}"; do
+    nordvpn meshnet peer routing deny "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_DENY_PEER_LOCAL} ]]; then
+  read -ra deny_local <<< "${NORDVPN_DENY_PEER_LOCAL}"
+  for value in "${deny_local[@]}"; do
+    nordvpn meshnet peer local deny "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_DENY_PEER_FILESHARE} ]]; then
+  read -ra deny_fileshare <<< "${NORDVPN_DENY_PEER_FILESHARE}"
+  for value in "${deny_fileshare[@]}"; do
+    nordvpn meshnet peer fileshare deny "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_DENY_PEER_REMOTE} ]]; then
+  read -ra deny_remote <<< "${NORDVPN_DENY_PEER_REMOTE}"
+  for value in "${deny_remote[@]}"; do
+    nordvpn meshnet peer incoming deny "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_ALLOW_PEER_ROUTING} ]]; then
+  read -ra allow_routing <<< "${NORDVPN_ALLOW_PEER_ROUTING}"
+  for value in "${allow_routing[@]}"; do
+    nordvpn meshnet peer routing allow "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_ALLOW_PEER_LOCAL} ]]; then
+  read -ra allow_local <<< "${NORDVPN_ALLOW_PEER_LOCAL}"
+  for value in "${allow_local[@]}"; do
+    nordvpn meshnet peer local allow "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_ALLOW_PEER_FILESHARE} ]]; then
+  read -ra allow_fileshare <<< "${NORDVPN_ALLOW_PEER_FILESHARE}"
+  for value in "${allow_fileshare[@]}"; do
+    nordvpn meshnet peer fileshare allow "$value"
+  done
+fi
+
+if [[ -n ${NORDVPN_ALLOW_PEER_REMOTE} ]]; then
+  read -ra allow_remote <<< "${NORDVPN_ALLOW_PEER_REMOTE}"
+  for value in "${allow_remote[@]}"; do
+    nordvpn meshnet peer incoming allow "$value"
+  done
+fi
+
+# Reset delimiter to default space
+IFS=' '
+
+exit 0

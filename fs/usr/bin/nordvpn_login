@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv bash
+
+# fetch envs from HA and set accordingly
+CONFIG_PATH=/data/options.json
+NORDVPN_TOKEN=$(jq --raw-output '.nordvpn_token // empty' $CONFIG_PATH)
+
+# Do nothing if NordVPN isn't available
+while [ ! -S /run/nordvpn/nordvpnd.sock ] ; do
+  sleep 1
+done
+
+# Make sure the token isn't destroyed on logout
+nordvpn logout --persist-token > /dev/null
+
+# Login with token
+if [[ -n ${NORDVPN_TOKEN} ]]; then
+  nordvpn login --token "${NORDVPN_TOKEN}" || {
+    echo "Invalid token."
+    exit 1
+  }
+else
+  echo "No token set."
+  exit 1
+fi
+
+exit 0

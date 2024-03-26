@@ -1,0 +1,46 @@
+{
+    "name": "Mesh3",
+    "version": "1.3.3.7",
+    "slug": "mesh3",
+    "description": "A zero config VPN",
+    "arch": [
+      "armhf",
+      "armv7",
+      "aarch64",
+      "amd64",
+      "i386"
+    ],
+    "startup": "application",
+    "boot": "auto",
+    "host_network": true,
+    "privileged": [
+      "NET_ADMIN",
+      "DAC_READ_SEARCH",
+      "IPC_LOCK",
+      "NET_ADMIN",
+      "NET_RAW",
+      "PERFMON",
+      "SYS_ADMIN",
+      "SYS_MODULE",
+      "SYS_NICE",
+      "SYS_PTRACE",
+      "SYS_RAWIO",
+      "SYS_RESOURCE",
+      "SYS_TIME"
+    ],
+    "full_access": true,
+    "devices": [
+      "/dev/net/tun"
+    ],
+    "options": {
+      "hostname": "homeassistant"
+    },
+    "map": [
+      "ssl:rw"
+    ],
+    "schema": {
+      "nordvpn_token": "str",
+      "hostname": "str?"
+    },
+    "init": false
+  }
