@@ -7,8 +7,12 @@ ARG NORDVPN_CLIENT_VERSION=3.17.0
 # Avoid interactions during build process
 ARG DEBIAN_FRONTEND=noninteractive
 
-#RUN apt-get update -y && \
- #   apt-get install -y iptables
+RUN apt update
+RUN apt install -y wget iptables iproute2 procps iputils-ping
+
+# Use legacy iptables not nftables, see https://wiki.debian.org/iptables
+RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 # Install dependencies, get the NordVPN Repo, install NordVPN client, cleanup and set executables
 RUN echo "**** Get NordVPN Repo ****" && \
@@ -30,10 +34,6 @@ RUN echo "**** Get NordVPN Repo ****" && \
 
 # Copy all the files we need in the container
 COPY /fs /
-
-# Set legacy iptables
-#RUN sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-#RUN sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 # Make sure NordVPN service is running before logging in and launching Meshnet
 ENV S6_CMD_WAIT_FOR_SERVICES=1
