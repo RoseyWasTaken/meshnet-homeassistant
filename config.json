@@ -12,21 +12,10 @@
     ],
     "startup": "application",
     "boot": "auto",
-    "host_network": true,
+    "host_network": false,
     "privileged": [
       "NET_ADMIN",
-      "DAC_READ_SEARCH",
-      "IPC_LOCK",
-      "NET_ADMIN",
-      "NET_RAW",
-      "PERFMON",
-      "SYS_ADMIN",
-      "SYS_MODULE",
-      "SYS_NICE",
-      "SYS_PTRACE",
-      "SYS_RAWIO",
-      "SYS_RESOURCE",
-      "SYS_TIME"
+      "NET_RAW"
     ],
     "full_access": true,
     "devices": [
