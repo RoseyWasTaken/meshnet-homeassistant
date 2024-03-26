@@ -7,7 +7,7 @@ ARG NORDVPN_CLIENT_VERSION=3.17.0
 # Avoid interactions during build process
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -y
+RUN apt update
 RUN update-alternatives --set iptables /usr/sbin/iptables-nft
 RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-nft
 
