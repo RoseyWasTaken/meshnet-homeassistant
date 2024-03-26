@@ -33,14 +33,16 @@
       "/dev/net/tun"
     ],
     "options": {
-      "meshnet_nickname": "homeassistant"
+      "meshnet_nickname": "homeassistant",
+      "meshnet_debug": true
     },
     "map": [
       "ssl:rw"
     ],
     "schema": {
       "nordvpn_token": "str",
-      "meshnet_nickname": "str?"
+      "meshnet_nickname": "str?",
+      "meshnet_debug": "bool"
     },
     "init": false
   }
